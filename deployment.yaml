@@ -8,6 +8,8 @@ spec:
     matchLabels:
       app: second-app
       tier: backend
+    # matchExpresssions:
+    #   - {key: app, operator: In, values: [first-app, second-app]}
   template: 
     metadata:
       labels:
@@ -16,4 +18,11 @@ spec:
     spec: 
       containers:
         - name: second-node
-          image: zkrakus/kub-first-app:1
+          image: zkrakus/kub-first-app:2
+          imagePullPolciy: Always
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+              periodSeconds: 10
+              initialDelaySeconds: 5
